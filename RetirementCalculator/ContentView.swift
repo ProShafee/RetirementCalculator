@@ -61,7 +61,9 @@ struct ContentView: View {
                 let properties = ["current_age":"\(currentAge)","planned_retirement_age":"\(plannedAge)"]
                 Analytics.trackEvent("calculate_retirement_amount", withProperties: properties)
                 
-                result = "if you save $\(monthlyInvestment) every month for \(Int(plannedAge)! - Int(currentAge)!) years, and invest that money plus your current investment of $\(currentSavings) at a \(interestRate)% annaul interest rate, you will have $X by the time you are \(plannedAge)"
+                let retirementAmount = calculateRetirementAmount(monthlyInvestment: 10, currentAge: 10, plannedAge: 10, interestRate: 10, currentSavings: 10)
+                
+                result = "if you save $\(monthlyInvestment) every month for \(Int(plannedAge)! - Int(currentAge)!) years, and invest that money plus your current investment of $\(currentSavings) at a \(interestRate)% annaul interest rate, you will have $\(retirementAmount) by the time you are \(plannedAge)"
             } label: {
                 Text("Calculate retirement Amount")
                     .foregroundColor(.white)
@@ -91,6 +93,10 @@ struct ContentView: View {
             Analytics.trackEvent("navigated_to_calculator")
         }
         .padding()
+    }
+    
+    func calculateRetirementAmount(monthlyInvestment: Int, currentAge: Int, plannedAge: Int, interestRate: Int, currentSavings: Int) -> Int{
+        return 1000000
     }
 }
 
