@@ -14,7 +14,7 @@ import AppCenterAnalytics
 struct RetirementCalculatorApp: App {
     
     init() {
-        AppCenter.start(withAppSecret: "4668d64b-5945-4f00-b09c-e1d61b5668ae", services: [Analytics.self, Crashes.self])
+        AppCenter.start(withAppSecret: "d37fd133-4945-4097-86a2-80d25c3d5393", services: [Analytics.self, Crashes.self])
     }
     
     var body: some Scene {
