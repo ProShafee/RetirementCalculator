@@ -6,14 +6,87 @@
 //
 
 import SwiftUI
+import AppCenterCrashes
+import AppCenterAnalytics
 
 struct ContentView: View {
+    
+    @State var monthlyInvestment: String = ""
+    @State var currentAge: String = ""
+    @State var plannedAge: String = ""
+    @State var interestRate: String = ""
+    @State var currentSavings: String = ""
+    @State var result: String = ""
+    @State var didCrash: Bool = false
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            TextField("Monthly investemnts", text: $monthlyInvestment)
+                .keyboardType(.numberPad)
+                .padding(6)
+                .background(
+                    Rectangle().stroke(Color.gray, lineWidth: 2)
+                        .cornerRadius(1)
+                )
+            TextField("Your current age", text: $currentAge)
+                .keyboardType(.numberPad)
+                .padding(6)
+                .background(
+                    Rectangle().stroke(Color.gray, lineWidth: 2)
+                        .cornerRadius(1)
+                )
+            TextField("Your planned retirement age", text: $plannedAge)
+                .keyboardType(.numberPad)
+                .padding(6)
+                .background(
+                    Rectangle().stroke(Color.gray, lineWidth: 2)
+                        .cornerRadius(1)
+                )
+            TextField("Average interest rate of investments", text: $interestRate)
+                .keyboardType(.numberPad)
+                .padding(6)
+                .background(
+                    Rectangle().stroke(Color.gray, lineWidth: 2)
+                        .cornerRadius(1)
+                )
+            TextField("Current Savings", text: $currentSavings)
+                .keyboardType(.numberPad)
+                .padding(6)
+                .background(
+                    Rectangle().stroke(Color.gray, lineWidth: 2)
+                        .cornerRadius(1)
+                )
+            
+            Button {
+                let properties = ["current_age":"\(currentAge)","planned_retirement_age":"\(plannedAge)"]
+                Analytics.trackEvent("calculate_retirement_amount", withProperties: properties)
+            } label: {
+                Text("Calculate retirement Amount")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(
+                        Color.green
+                    )
+                    .padding()
+            }
+            
+            Text(result)
+
+            
+        }
+        .alert(isPresented: $didCrash, content: {
+            Alert(
+                title: Text("Oops"),
+                message: Text("Sorry about that, an error occured"),
+                dismissButton: .default(Text("Ok"))
+            )
+        })
+        .onAppear {
+            if Crashes.hasCrashedInLastSession {
+                didCrash = true
+            }
+            
+            Analytics.trackEvent("navigated_to_calculator")
         }
         .padding()
     }
