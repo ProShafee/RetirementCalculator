@@ -8,34 +8,37 @@
 import XCTest
 
 final class RetirementCalculatorUITests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
     func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
+        XCTContext.runActivity(named: "screenshot") { activity in
+            let app = XCUIApplication()
+            app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+            XCTAssertTrue(app.buttons["Calculate retirement Amount"].waitForExistence(timeout: 2))
+            
+            app.textFields["Monthly investemnts"].tap()
+            app.textFields["Monthly investemnts"].tap()
+            app/*@START_MENU_TOKEN@*/.keys["4"]/*[[".keyboards.keys[\"4\"]",".keys[\"4\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+            app/*@START_MENU_TOKEN@*/.keys["8"]/*[[".keyboards.keys[\"8\"]",".keys[\"8\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+            app.keys["5"].tap()
+            
+            app.textFields["Your current age"].tap()
+            app/*@START_MENU_TOKEN@*/.keys["2"]/*[[".keyboards.keys[\"2\"]",".keys[\"2\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+            app/*@START_MENU_TOKEN@*/.keys["7"]/*[[".keyboards.keys[\"7\"]",".keys[\"7\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+            
+            app.textFields["Your planned retirement age"].tap()
+            app.keys["6"].tap()
+            app.keys["5"].tap()
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+            app.textFields["Average interest rate of investments"].tap()
+            app.keys["8"].tap()
+            
+            app.textFields["Current Savings"].tap()
+            app.keys["5"].tap()
+            app.keys["8"].tap()
+            app.keys["0"].tap()
+            app.keys["0"].tap()
+            
+            app.buttons["Calculate retirement Amount"].tap()
         }
     }
 }
